@@ -5,9 +5,9 @@
 
       <div class="modal-body">
         <div class="form-group">
-          <label for="focus-minutes">Focus (minutes)</label>
+          <label :for="focusInputId">Focus (minutes)</label>
           <input
-            id="focus-minutes"
+            :id="focusInputId"
             v-model.number="formData.focusMinutes"
             type="number"
             min="1"
@@ -16,9 +16,9 @@
         </div>
 
         <div class="form-group">
-          <label for="break-minutes">Break (minutes)</label>
+          <label :for="breakInputId">Break (minutes)</label>
           <input
-            id="break-minutes"
+            :id="breakInputId"
             v-model.number="formData.breakMinutes"
             type="number"
             min="1"
@@ -48,7 +48,7 @@
         <button
           type="button"
           class="modal-button primary"
-          :disabled="status !== 'idle'"
+          :disabled="isSaveDisabled"
           @click="handleSave"
         >
           Save
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { reactive, computed, watch } from 'vue'
 import type { TimerStatus } from '../types/timer'
 
 const props = defineProps<{
@@ -75,10 +75,22 @@ const emit = defineEmits<{
   save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean }]
 }>()
 
+const uid = Math.random().toString(36).substring(2, 11)
+const focusInputId = `focus-minutes-${uid}`
+const breakInputId = `break-minutes-${uid}`
+
 const formData = reactive({
   focusMinutes: props.initialFocusMinutes,
   breakMinutes: props.initialBreakMinutes,
   motionEnabled: props.initialMotionEnabled,
+})
+
+const isSaveDisabled = computed(() => {
+  return (
+    props.status !== 'idle' ||
+    !Number.isFinite(formData.focusMinutes) ||
+    !Number.isFinite(formData.breakMinutes)
+  )
 })
 
 watch(() => props.open, (isOpen) => {
