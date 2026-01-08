@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Shadow -->
+  <g id="shadow">
+    <ellipse cx="256" cy="400" rx="140" ry="30" fill="#00000020"/>
+  </g>
+
+  <!-- Tomato Body (lying down) -->
+  <g id="tomato">
+    <!-- Main tomato body (horizontal) -->
+    <ellipse cx="256" cy="320" rx="140" ry="95" fill="#FF6347"/>
+    <!-- Stem (lying to the side) -->
+    <rect x="160" y="285" width="25" height="18" fill="#228B22" transform="rotate(-10 172 294)"/>
+    <!-- Leaves -->
+    <ellipse cx="165" cy="275" rx="15" ry="25" fill="#32CD32"/>
+    <ellipse cx="185" cy="280" rx="15" ry="22" fill="#32CD32"/>
+  </g>
+
+  <!-- Cat Features -->
+  <g id="cat">
+    <!-- Left ear (folded back) -->
+    <path d="M 180 265 L 165 240 L 190 255 Z" fill="#FFB6C1"/>
+    <!-- Right ear (folded back) -->
+    <path d="M 230 250 L 220 225 L 240 242 Z" fill="#FFB6C1"/>
+
+    <!-- Left eye (closed - curved line) -->
+    <path d="M 215 305 Q 225 310 235 305" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Right eye (closed - curved line) -->
+    <path d="M 260 305 Q 270 310 280 305" stroke="#000000" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <!-- Nose -->
+    <circle cx="248" cy="325" r="7" fill="#FF1493"/>
+
+    <!-- Mouth (content sleeping smile) -->
+    <path d="M 220 340 Q 248 345 275 340" stroke="#000000" stroke-width="2" fill="none"/>
+
+    <!-- Whiskers (drooping) -->
+    <line x1="170" y1="315" x2="205" y2="320" stroke="#000000" stroke-width="1.5"/>
+    <line x1="170" y1="325" x2="205" y2="330" stroke="#000000" stroke-width="1.5"/>
+    <line x1="290" y1="320" x2="325" y2="315" stroke="#000000" stroke-width="1.5"/>
+    <line x1="290" y1="330" x2="325" y2="325" stroke="#000000" stroke-width="1.5"/>
+
+    <!-- Sleep "Z" symbols -->
+    <text x="340" y="260" font-family="Arial, sans-serif" font-size="32" fill="#4169E1" opacity="0.8">Z</text>
+    <text x="360" y="230" font-family="Arial, sans-serif" font-size="40" fill="#4169E1" opacity="0.6">Z</text>
+    <text x="385" y="195" font-family="Arial, sans-serif" font-size="48" fill="#4169E1" opacity="0.4">Z</text>
+  </g>
+</svg>

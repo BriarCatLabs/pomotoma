@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Shadow -->
+  <g id="shadow">
+    <ellipse cx="280" cy="380" rx="90" ry="25" fill="#00000020" transform="rotate(-15 280 380)"/>
+  </g>
+
+  <!-- Tomato Body (tilted for rolling effect) -->
+  <g id="tomato" transform="rotate(-25 256 300)">
+    <!-- Main tomato body -->
+    <circle cx="256" cy="300" r="120" fill="#FF6347"/>
+    <!-- Stem -->
+    <rect x="246" y="180" width="20" height="30" fill="#228B22"/>
+    <!-- Leaves -->
+    <ellipse cx="235" cy="195" rx="25" ry="12" fill="#32CD32"/>
+    <ellipse cx="277" cy="195" rx="25" ry="12" fill="#32CD32"/>
+  </g>
+
+  <!-- Cat Features (tilted) -->
+  <g id="cat" transform="rotate(-25 256 300)">
+    <!-- Left ear -->
+    <path d="M 200 220 L 180 180 L 220 210 Z" fill="#FFB6C1"/>
+    <!-- Right ear -->
+    <path d="M 312 220 L 332 180 L 292 210 Z" fill="#FFB6C1"/>
+
+    <!-- Left eye (squinted for motion) -->
+    <ellipse cx="230" cy="280" rx="10" ry="15" fill="#000000"/>
+    <!-- Right eye (squinted for motion) -->
+    <ellipse cx="282" cy="280" rx="10" ry="15" fill="#000000"/>
+
+    <!-- Nose -->
+    <circle cx="256" cy="310" r="8" fill="#FF1493"/>
+
+    <!-- Mouth (curved for expression) -->
+    <path d="M 256 310 Q 240 320 232 318" stroke="#000000" stroke-width="2" fill="none"/>
+    <path d="M 256 310 Q 272 320 280 318" stroke="#000000" stroke-width="2" fill="none"/>
+
+    <!-- Whiskers (slightly curved) -->
+    <line x1="180" y1="295" x2="220" y2="290" stroke="#000000" stroke-width="1.5"/>
+    <line x1="180" y1="305" x2="220" y2="305" stroke="#000000" stroke-width="1.5"/>
+    <line x1="292" y1="290" x2="332" y2="295" stroke="#000000" stroke-width="1.5"/>
+    <line x1="292" y1="305" x2="332" y2="305" stroke="#000000" stroke-width="1.5"/>
+  </g>
+</svg>
