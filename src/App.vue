@@ -1,15 +1,7 @@
 <template>
-  <div id="app">
-    <h1>Pomotoma</h1>
-  </div>
+  <TimerPage />
 </template>
 
 <script setup lang="ts">
+import TimerPage from './components/TimerPage.vue'
 </script>
-
-<style scoped>
-#app {
-  text-align: center;
-  padding: 20px;
-}
-</style>
