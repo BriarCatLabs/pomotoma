@@ -27,7 +27,7 @@
       <!-- Character Stage (Placeholder) -->
       <div class="character-stage">
         <div class="character-placeholder">
-          <template v-if="settings.motionEnabled">
+          <template v-if="motionEnabled">
             {{ timerState.mode === 'focus' ? '🍅' : '🐱' }}
           </template>
           <template v-else>
@@ -144,12 +144,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watchEffect } from 'vue'
+import { ref, reactive, computed, watchEffect } from 'vue'
 import { useTimer, formatMMSS } from '../composables/useTimer'
 import { useSettings } from '../composables/useSettings'
 
 const { state: timerState, start, pause, resume, reset, skip, setMode, setDurations } = useTimer()
 const { settings, save: saveSettingsToStorage } = useSettings()
+
+const motionEnabled = computed(() => settings.value.motionEnabled)
 
 const isModalOpen = ref(false)
 const formData = reactive({
