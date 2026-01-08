@@ -27,7 +27,12 @@
       <!-- Character Stage (Placeholder) -->
       <div class="character-stage">
         <div class="character-placeholder">
-          {{ timerState.mode === 'focus' ? '🍅' : '🐱' }}
+          <template v-if="settings.motionEnabled">
+            {{ timerState.mode === 'focus' ? '🍅' : '🐱' }}
+          </template>
+          <template v-else>
+            {{ timerState.mode === 'focus' ? '🍅💤' : '🐱💤' }}
+          </template>
         </div>
       </div>
 
@@ -176,8 +181,8 @@ const saveSettings = () => {
 
   if (success) {
     setDurations({
-      focusSec: settings.value.focusMinutes * 60,
-      breakSec: settings.value.breakMinutes * 60,
+      focusSec: formData.focusMinutes * 60,
+      breakSec: formData.breakMinutes * 60,
     })
     closeModal()
   }
@@ -188,6 +193,7 @@ setDurations({
   focusSec: settings.value.focusMinutes * 60,
   breakSec: settings.value.breakMinutes * 60,
 })
+setMode(settings.value.lastMode)
 
 // Update document title
 watchEffect(() => {
