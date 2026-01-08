@@ -91,10 +91,16 @@ const toggleMotion = () => {
     focusMinutes: settings.value.focusMinutes,
     breakMinutes: settings.value.breakMinutes,
     motionEnabled: !settings.value.motionEnabled,
-    lastMode: settings.value.lastMode,
+    lastMode: timerState.value.mode,
   }
 
-  saveSettingsToStorage(newSettings)
+  const success = saveSettingsToStorage(newSettings)
+
+  // Success: settings.value is updated automatically, motionEnabled computed will reflect the change
+  // Failure: settings.value remains unchanged, display stays consistent
+  if (!success) {
+    // localStorage save failed, but app continues with current in-memory state
+  }
 }
 
 const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean }) => {
