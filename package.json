@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://local_proxy@127.0.0.1:64335/git/BriarCatLabs/pomotoma"
+    "url": "https://github.com/BriarCatLabs/pomotoma.git"
   },
   "keywords": [],
   "author": "",
