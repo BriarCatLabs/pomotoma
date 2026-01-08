@@ -4,6 +4,11 @@
       <!-- Settings Button (Top Left) -->
       <button type="button" class="settings-button" @click="openModal">⚙️</button>
 
+      <!-- Motion Toggle (Top Right) -->
+      <button type="button" class="motion-toggle" @click="toggleMotion">
+        Motion: {{ motionEnabled ? 'On' : 'Off' }}
+      </button>
+
       <!-- Mode Tabs -->
       <div class="mode-tabs">
         <button
@@ -81,6 +86,17 @@ const closeModal = () => {
   isModalOpen.value = false
 }
 
+const toggleMotion = () => {
+  const newSettings = {
+    focusMinutes: settings.value.focusMinutes,
+    breakMinutes: settings.value.breakMinutes,
+    motionEnabled: !settings.value.motionEnabled,
+    lastMode: settings.value.lastMode,
+  }
+
+  saveSettingsToStorage(newSettings)
+}
+
 const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean }) => {
   const newSettings = {
     focusMinutes: payload.focusMinutes,
@@ -148,6 +164,27 @@ watchEffect(() => {
   opacity: 1;
 }
 
+/* Motion Toggle */
+.motion-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: all var(--transition-base);
+}
+
+.motion-toggle:hover {
+  background: var(--color-bg-tertiary);
+  border-color: var(--color-border-medium);
+}
+
 /* Mode Tabs */
 .mode-tabs {
   display: flex;
@@ -199,6 +236,11 @@ watchEffect(() => {
 @media (max-width: 480px) {
   .timer-display {
     font-size: var(--font-size-3xl);
+  }
+
+  .motion-toggle {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs);
   }
 }
 </style>
