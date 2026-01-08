@@ -3,6 +3,8 @@
   --color-bg-primary: #faf8f5;
   --color-bg-secondary: #f0ede8;
   --color-bg-tertiary: #e8e4df;
+  --color-surface: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.4);
 
   --color-text-primary: #3a3a3a;
   --color-text-secondary: #6b6b6b;
@@ -22,9 +24,9 @@
   --color-accent-cat-dark: #1a1a1a;
 
   /* UI State Colors - Pastel */
-  --color-primary: #d4a5a5;
-  --color-primary-hover: #c49090;
-  --color-primary-active: #b47b7b;
+  --color-primary: #b4a5d4;
+  --color-primary-hover: #a490c4;
+  --color-primary-active: #947bb4;
 
   --color-secondary: #a5b4d4;
   --color-secondary-hover: #90a4c4;
