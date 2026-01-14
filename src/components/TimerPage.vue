@@ -32,7 +32,11 @@
       </div>
 
       <!-- Character Stage -->
-      <CharacterStage :mode="timerState.mode" :motion-enabled="motionEnabled" />
+      <CharacterStage
+        :mode="timerState.mode"
+        :status="timerState.status"
+        :motion-enabled="motionEnabled"
+      />
 
       <!-- Timer Display -->
       <div class="timer-display">
