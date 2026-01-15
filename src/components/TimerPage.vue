@@ -61,6 +61,7 @@
       :initial-focus-minutes="settings.focusMinutes"
       :initial-break-minutes="settings.breakMinutes"
       :initial-motion-enabled="settings.motionEnabled"
+      :initial-chime-enabled="settings.chimeEnabled"
       @close="closeModal"
       @save="handleSave"
     />
@@ -68,17 +69,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed, watchEffect, onMounted } from 'vue'
 import { useTimer, formatMMSS } from '../composables/useTimer'
 import { useSettings } from '../composables/useSettings'
 import CharacterStage from './CharacterStage.vue'
 import TimerControls from './TimerControls.vue'
 import SettingsModal from './SettingsModal.vue'
 
-const { state: timerState, start, pause, resume, reset, skip, setMode, setDurations } = useTimer()
+const { state: timerState, start: timerStart, pause, resume: timerResume, reset, skip: timerSkip, setMode, setDurations, setOnTimeUp } = useTimer()
 const { settings, save: saveSettingsToStorage } = useSettings()
 
 const motionEnabled = computed(() => settings.value.motionEnabled)
+const chimeEnabled = computed(() => settings.value.chimeEnabled)
+
+let audioInstance: HTMLAudioElement | null = null
 
 const isModalOpen = ref(false)
 
@@ -90,11 +94,59 @@ const closeModal = () => {
   isModalOpen.value = false
 }
 
+const primeAudio = () => {
+  if (!audioInstance) return
+  try {
+    const playPromise = audioInstance.play()
+    if (playPromise) {
+      playPromise.then(() => {
+        audioInstance?.pause()
+        if (audioInstance) audioInstance.currentTime = 0
+      }).catch(() => {
+        // Priming failed, ignore
+      })
+    }
+  } catch {
+    // Priming failed, ignore
+  }
+}
+
+const playChime = () => {
+  if (!chimeEnabled.value || !audioInstance) return
+  try {
+    audioInstance.currentTime = 0
+    const playPromise = audioInstance.play()
+    if (playPromise) {
+      playPromise.catch((err) => {
+        console.debug('Chime playback failed:', err)
+      })
+    }
+  } catch (err) {
+    console.debug('Chime playback error:', err)
+  }
+}
+
+const start = () => {
+  primeAudio()
+  timerStart()
+}
+
+const resume = () => {
+  primeAudio()
+  timerResume()
+}
+
+const skip = () => {
+  primeAudio()
+  timerSkip()
+}
+
 const toggleMotion = () => {
   const newSettings = {
     focusMinutes: settings.value.focusMinutes,
     breakMinutes: settings.value.breakMinutes,
     motionEnabled: !settings.value.motionEnabled,
+    chimeEnabled: settings.value.chimeEnabled,
     lastMode: timerState.value.mode,
   }
 
@@ -107,11 +159,12 @@ const toggleMotion = () => {
   }
 }
 
-const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean }) => {
+const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean }) => {
   const newSettings = {
     focusMinutes: payload.focusMinutes,
     breakMinutes: payload.breakMinutes,
     motionEnabled: payload.motionEnabled,
+    chimeEnabled: payload.chimeEnabled,
     lastMode: timerState.value.mode,
   }
 
@@ -132,6 +185,22 @@ setDurations({
   breakSec: settings.value.breakMinutes * 60,
 })
 setMode(settings.value.lastMode)
+
+// Initialize audio
+onMounted(() => {
+  try {
+    const audioPath = import.meta.env.BASE_URL + 'assets/sounds/chime.mp3'
+    audioInstance = new Audio(audioPath)
+    audioInstance.preload = 'auto'
+  } catch (err) {
+    console.debug('Failed to load chime audio:', err)
+  }
+})
+
+// Set up time-up callback
+setOnTimeUp(() => {
+  playChime()
+})
 
 // Update document title
 watchEffect(() => {

@@ -9,6 +9,7 @@ export function getDefaultSettings(): Settings {
     focusMinutes: 25,
     breakMinutes: 5,
     motionEnabled: true,
+    chimeEnabled: true,
     lastMode: 'focus',
   }
 }
@@ -35,6 +36,7 @@ export function sanitizeSettings(input: Partial<Settings> | null | undefined): S
     focusMinutes: clamp(input.focusMinutes, 1, 99, defaults.focusMinutes),
     breakMinutes: clamp(input.breakMinutes, 1, 99, defaults.breakMinutes),
     motionEnabled: typeof input.motionEnabled === 'boolean' ? input.motionEnabled : defaults.motionEnabled,
+    chimeEnabled: typeof input.chimeEnabled === 'boolean' ? input.chimeEnabled : defaults.chimeEnabled,
     lastMode: input.lastMode === 'focus' || input.lastMode === 'break' ? input.lastMode : defaults.lastMode,
   }
 }

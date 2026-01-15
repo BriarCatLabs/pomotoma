@@ -35,6 +35,16 @@
             <span class="checkbox-label">Enable Motion</span>
           </label>
         </div>
+
+        <div class="form-group">
+          <label>
+            <input
+              v-model="formData.chimeEnabled"
+              type="checkbox"
+            />
+            <span class="checkbox-label">Enable Chime</span>
+          </label>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -68,11 +78,12 @@ const props = defineProps<{
   initialFocusMinutes: number
   initialBreakMinutes: number
   initialMotionEnabled: boolean
+  initialChimeEnabled: boolean
 }>()
 
 const emit = defineEmits<{
   close: []
-  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean }]
+  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean }]
 }>()
 
 const uid = Math.random().toString(36).substring(2, 11)
@@ -83,6 +94,7 @@ const formData = reactive({
   focusMinutes: props.initialFocusMinutes,
   breakMinutes: props.initialBreakMinutes,
   motionEnabled: props.initialMotionEnabled,
+  chimeEnabled: props.initialChimeEnabled,
 })
 
 const isSaveDisabled = computed(() => {
@@ -98,6 +110,7 @@ watch(() => props.open, (isOpen) => {
     formData.focusMinutes = props.initialFocusMinutes
     formData.breakMinutes = props.initialBreakMinutes
     formData.motionEnabled = props.initialMotionEnabled
+    formData.chimeEnabled = props.initialChimeEnabled
   }
 })
 
@@ -106,6 +119,7 @@ const handleSave = () => {
     focusMinutes: formData.focusMinutes,
     breakMinutes: formData.breakMinutes,
     motionEnabled: formData.motionEnabled,
+    chimeEnabled: formData.chimeEnabled,
   })
 }
 </script>
