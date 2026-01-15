@@ -83,6 +83,7 @@ const motionEnabled = computed(() => settings.value.motionEnabled)
 const chimeEnabled = computed(() => settings.value.chimeEnabled)
 
 let audioInstance: HTMLAudioElement | null = null
+let chimeStopTimerId: ReturnType<typeof setTimeout> | null = null
 
 const isModalOpen = ref(false)
 
@@ -113,11 +114,27 @@ const primeAudio = () => {
 
 const playChime = () => {
   if (!chimeEnabled.value || !audioInstance) return
+
+  // Clear existing stop timer if any
+  if (chimeStopTimerId !== null) {
+    clearTimeout(chimeStopTimerId)
+    chimeStopTimerId = null
+  }
+
   try {
     audioInstance.currentTime = 0
     const playPromise = audioInstance.play()
     if (playPromise) {
-      playPromise.catch((err) => {
+      playPromise.then(() => {
+        // Stop chime after 3 seconds
+        chimeStopTimerId = setTimeout(() => {
+          if (audioInstance) {
+            audioInstance.pause()
+            audioInstance.currentTime = 0
+          }
+          chimeStopTimerId = null
+        }, 3000)
+      }).catch((err) => {
         console.debug('Chime playback failed:', err)
       })
     }

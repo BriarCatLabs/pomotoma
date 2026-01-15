@@ -26,6 +26,7 @@ export function useTimer() {
 
   let intervalId: ReturnType<typeof setInterval> | null = null
   let onTimeUpCallback: (() => void) | null = null
+  let timeUpFired = false
 
   const stopInterval = () => {
     if (intervalId !== null) {
@@ -50,7 +51,9 @@ export function useTimer() {
       state.value.startedAtEpochMs = undefined
       stopInterval()
 
-      if (onTimeUpCallback) {
+      // Call timeUp callback only once
+      if (!timeUpFired && onTimeUpCallback) {
+        timeUpFired = true
         onTimeUpCallback()
       }
     } else {
@@ -63,6 +66,7 @@ export function useTimer() {
       return
     }
 
+    timeUpFired = false
     state.value.status = 'running'
     state.value.startedAtEpochMs = Date.now()
     state.value.pausedAtEpochMs = undefined
@@ -88,6 +92,7 @@ export function useTimer() {
       return
     }
 
+    timeUpFired = false
     const pauseDuration = Date.now() - state.value.pausedAtEpochMs
     if (state.value.startedAtEpochMs !== undefined) {
       state.value.startedAtEpochMs += pauseDuration
@@ -103,6 +108,7 @@ export function useTimer() {
   const reset = () => {
     stopInterval()
 
+    timeUpFired = false
     state.value.status = 'idle'
     state.value.remainingSec = state.value.durationSec
     state.value.startedAtEpochMs = undefined
@@ -112,6 +118,7 @@ export function useTimer() {
   const skip = () => {
     stopInterval()
 
+    timeUpFired = false
     const nextMode: TimerMode = state.value.mode === 'focus' ? 'break' : 'focus'
     const nextDuration = nextMode === 'focus' ? durations.value.focusSec : durations.value.breakSec
 
@@ -128,6 +135,7 @@ export function useTimer() {
       return
     }
 
+    timeUpFired = false
     const nextDuration = mode === 'focus' ? durations.value.focusSec : durations.value.breakSec
 
     state.value.mode = mode
