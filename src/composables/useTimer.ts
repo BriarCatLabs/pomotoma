@@ -25,6 +25,7 @@ export function useTimer() {
   })
 
   let intervalId: ReturnType<typeof setInterval> | null = null
+  let onTimeUpCallback: (() => void) | null = null
 
   const stopInterval = () => {
     if (intervalId !== null) {
@@ -48,6 +49,10 @@ export function useTimer() {
       state.value.status = 'idle'
       state.value.startedAtEpochMs = undefined
       stopInterval()
+
+      if (onTimeUpCallback) {
+        onTimeUpCallback()
+      }
     } else {
       state.value.remainingSec = remaining
     }
@@ -140,6 +145,10 @@ export function useTimer() {
     }
   }
 
+  const setOnTimeUp = (callback: () => void) => {
+    onTimeUpCallback = callback
+  }
+
   return {
     state,
     start,
@@ -149,5 +158,6 @@ export function useTimer() {
     skip,
     setMode,
     setDurations,
+    setOnTimeUp,
   }
 }
