@@ -6,7 +6,7 @@
 
       <!-- Motion Toggle (Top Right) -->
       <button type="button" class="motion-toggle" @click="toggleMotion">
-        Motion: {{ motionEnabled ? 'On' : 'Off' }}
+        {{ t('settings.enableMotion') }}: {{ motionEnabled ? t('motion.on') : t('motion.off') }}
       </button>
 
       <!-- Mode Tabs -->
@@ -18,7 +18,7 @@
           :disabled="timerState.status !== 'idle'"
           @click="() => setMode('focus')"
         >
-          Focus
+          {{ t('mode.focus') }}
         </button>
         <button
           type="button"
@@ -27,7 +27,7 @@
           :disabled="timerState.status !== 'idle'"
           @click="() => setMode('break')"
         >
-          Break
+          {{ t('mode.break') }}
         </button>
       </div>
 
@@ -46,6 +46,7 @@
       <!-- Controls -->
       <TimerControls
         :status="timerState.status"
+        :t="t"
         @start="start"
         @pause="pause"
         @resume="resume"
@@ -63,6 +64,8 @@
       :initial-motion-enabled="settings.motionEnabled"
       :initial-chime-enabled="settings.chimeEnabled"
       :initial-auto-switch-enabled="settings.autoSwitchEnabled"
+      :initial-language="settings.language"
+      :t="t"
       @close="closeModal"
       @save="handleSave"
     />
@@ -70,15 +73,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect, onMounted } from 'vue'
+import { ref, computed, watchEffect, onMounted, toRef } from 'vue'
 import { useTimer, formatMMSS } from '../composables/useTimer'
 import { useSettings } from '../composables/useSettings'
+import { useI18n } from '../i18n/useI18n'
 import CharacterStage from './CharacterStage.vue'
 import TimerControls from './TimerControls.vue'
 import SettingsModal from './SettingsModal.vue'
 
 const { state: timerState, start: timerStart, pause, resume: timerResume, reset, skip: timerSkip, setMode, setDurations, setOnTimeUp } = useTimer()
 const { settings, save: saveSettingsToStorage } = useSettings()
+const languageRef = toRef(settings.value, 'language')
+const { t } = useI18n(languageRef)
 
 const motionEnabled = computed(() => settings.value.motionEnabled)
 const chimeEnabled = computed(() => settings.value.chimeEnabled)
@@ -167,6 +173,7 @@ const toggleMotion = () => {
     chimeEnabled: settings.value.chimeEnabled,
     autoSwitchEnabled: settings.value.autoSwitchEnabled,
     lastMode: timerState.value.mode,
+    language: settings.value.language,
   }
 
   const success = saveSettingsToStorage(newSettings)
@@ -178,7 +185,7 @@ const toggleMotion = () => {
   }
 }
 
-const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean }) => {
+const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean; language: 'ja' | 'en' }) => {
   const newSettings = {
     focusMinutes: payload.focusMinutes,
     breakMinutes: payload.breakMinutes,
@@ -186,6 +193,7 @@ const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motio
     chimeEnabled: payload.chimeEnabled,
     autoSwitchEnabled: payload.autoSwitchEnabled,
     lastMode: timerState.value.mode,
+    language: payload.language,
   }
 
   const success = saveSettingsToStorage(newSettings)
@@ -235,8 +243,9 @@ setOnTimeUp(() => {
 // Update document title
 watchEffect(() => {
   const timeStr = formatMMSS(timerState.value.remainingSec)
-  const modeStr = timerState.value.mode === 'focus' ? 'Focus' : 'Break'
-  document.title = `${timeStr} - ${modeStr} | Pomotoma`
+  const modeKey = timerState.value.mode === 'focus' ? 'mode.focus' : 'mode.break'
+  const modeStr = t(modeKey)
+  document.title = `${timeStr} - ${modeStr} | ${t('app.title')}`
 })
 </script>
 

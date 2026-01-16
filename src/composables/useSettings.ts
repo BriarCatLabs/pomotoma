@@ -12,6 +12,7 @@ export function getDefaultSettings(): Settings {
     chimeEnabled: true,
     autoSwitchEnabled: true,
     lastMode: 'focus',
+    language: 'ja',
   }
 }
 
@@ -40,6 +41,7 @@ export function sanitizeSettings(input: Partial<Settings> | null | undefined): S
     chimeEnabled: typeof input.chimeEnabled === 'boolean' ? input.chimeEnabled : defaults.chimeEnabled,
     autoSwitchEnabled: typeof input.autoSwitchEnabled === 'boolean' ? input.autoSwitchEnabled : defaults.autoSwitchEnabled,
     lastMode: input.lastMode === 'focus' || input.lastMode === 'break' ? input.lastMode : defaults.lastMode,
+    language: input.language === 'ja' || input.language === 'en' ? input.language : defaults.language,
   }
 }
 

@@ -4,8 +4,8 @@
       v-if="status === 'idle'"
       type="button"
       class="control-button primary"
-      aria-label="Start"
-      title="Start"
+      :aria-label="t('button.start')"
+      :title="t('button.start')"
       @click="$emit('start')"
     >
       ▶︎
@@ -15,8 +15,8 @@
       v-if="status === 'running'"
       type="button"
       class="control-button"
-      aria-label="Pause"
-      title="Pause"
+      :aria-label="t('button.pause')"
+      :title="t('button.pause')"
       @click="$emit('pause')"
     >
       ⏸
@@ -26,8 +26,8 @@
       v-if="status === 'paused'"
       type="button"
       class="control-button primary"
-      aria-label="Start"
-      title="Start"
+      :aria-label="t('button.resume')"
+      :title="t('button.resume')"
       @click="$emit('resume')"
     >
       ▶︎
@@ -37,8 +37,8 @@
       v-if="status !== 'idle'"
       type="button"
       class="control-button"
-      aria-label="Reset"
-      title="Reset"
+      :aria-label="t('button.reset')"
+      :title="t('button.reset')"
       @click="$emit('reset')"
     >
       ↺
@@ -47,8 +47,8 @@
     <button
       type="button"
       class="control-button"
-      aria-label="Skip"
-      title="Skip"
+      :aria-label="t('button.skip')"
+      :title="t('button.skip')"
       @click="$emit('skip')"
     >
       ⏭
@@ -58,9 +58,11 @@
 
 <script setup lang="ts">
 import type { TimerStatus } from '../types/timer'
+import type { Messages } from '../i18n/messages'
 
 defineProps<{
   status: TimerStatus
+  t: (key: keyof Messages) => string
 }>()
 
 defineEmits<{

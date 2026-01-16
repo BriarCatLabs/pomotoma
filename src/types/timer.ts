@@ -18,4 +18,5 @@ export interface Settings {
   chimeEnabled: boolean
   autoSwitchEnabled: boolean
   lastMode: TimerMode
+  language: 'ja' | 'en'
 }
