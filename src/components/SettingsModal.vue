@@ -1,11 +1,11 @@
 <template>
   <div v-if="open" class="modal-overlay" @click="$emit('close')">
     <div class="modal-panel" @click.stop>
-      <h2 class="modal-title">Settings</h2>
+      <h2 class="modal-title">{{ t('settings.title') }}</h2>
 
       <div class="modal-body">
         <div class="form-group">
-          <label :for="focusInputId">Focus (minutes)</label>
+          <label :for="focusInputId">{{ t('settings.focusMinutes') }}</label>
           <input
             :id="focusInputId"
             v-model.number="formData.focusMinutes"
@@ -16,7 +16,7 @@
         </div>
 
         <div class="form-group">
-          <label :for="breakInputId">Break (minutes)</label>
+          <label :for="breakInputId">{{ t('settings.breakMinutes') }}</label>
           <input
             :id="breakInputId"
             v-model.number="formData.breakMinutes"
@@ -32,7 +32,7 @@
               v-model="formData.motionEnabled"
               type="checkbox"
             />
-            <span class="checkbox-label">Enable Motion</span>
+            <span class="checkbox-label">{{ t('settings.enableMotion') }}</span>
           </label>
         </div>
 
@@ -42,7 +42,7 @@
               v-model="formData.chimeEnabled"
               type="checkbox"
             />
-            <span class="checkbox-label">Enable Chime</span>
+            <span class="checkbox-label">{{ t('settings.enableChime') }}</span>
           </label>
         </div>
 
@@ -52,8 +52,20 @@
               v-model="formData.autoSwitchEnabled"
               type="checkbox"
             />
-            <span class="checkbox-label">Auto Switch (Focus ⇔ Break)</span>
+            <span class="checkbox-label">{{ t('settings.autoSwitch') }}</span>
           </label>
+        </div>
+
+        <div class="form-group">
+          <label :for="`language-${uid}`">{{ t('settings.language') }}</label>
+          <select
+            :id="`language-${uid}`"
+            v-model="formData.language"
+            class="language-select"
+          >
+            <option value="ja">{{ t('settings.languageJa') }}</option>
+            <option value="en">{{ t('settings.languageEn') }}</option>
+          </select>
         </div>
       </div>
 
@@ -63,7 +75,7 @@
           class="modal-button"
           @click="$emit('close')"
         >
-          Cancel
+          {{ t('common.cancel') }}
         </button>
         <button
           type="button"
@@ -71,7 +83,7 @@
           :disabled="isSaveDisabled"
           @click="handleSave"
         >
-          Save
+          {{ t('common.save') }}
         </button>
       </div>
     </div>
@@ -81,6 +93,7 @@
 <script setup lang="ts">
 import { reactive, computed, watch } from 'vue'
 import type { TimerStatus } from '../types/timer'
+import type { Messages } from '../i18n/messages'
 
 const props = defineProps<{
   open: boolean
@@ -90,11 +103,13 @@ const props = defineProps<{
   initialMotionEnabled: boolean
   initialChimeEnabled: boolean
   initialAutoSwitchEnabled: boolean
+  initialLanguage: 'ja' | 'en'
+  t: (key: keyof Messages) => string
 }>()
 
 const emit = defineEmits<{
   close: []
-  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean }]
+  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean; language: 'ja' | 'en' }]
 }>()
 
 const uid = Math.random().toString(36).substring(2, 11)
@@ -107,6 +122,7 @@ const formData = reactive({
   motionEnabled: props.initialMotionEnabled,
   chimeEnabled: props.initialChimeEnabled,
   autoSwitchEnabled: props.initialAutoSwitchEnabled,
+  language: props.initialLanguage,
 })
 
 const isSaveDisabled = computed(() => {
@@ -124,6 +140,7 @@ watch(() => props.open, (isOpen) => {
     formData.motionEnabled = props.initialMotionEnabled
     formData.chimeEnabled = props.initialChimeEnabled
     formData.autoSwitchEnabled = props.initialAutoSwitchEnabled
+    formData.language = props.initialLanguage
   }
 })
 
@@ -134,6 +151,7 @@ const handleSave = () => {
     motionEnabled: formData.motionEnabled,
     chimeEnabled: formData.chimeEnabled,
     autoSwitchEnabled: formData.autoSwitchEnabled,
+    language: formData.language,
   })
 }
 </script>
@@ -183,7 +201,8 @@ const handleSave = () => {
   margin-bottom: var(--spacing-xs);
 }
 
-.form-group input[type="number"] {
+.form-group input[type="number"],
+.form-group .language-select {
   width: 100%;
   padding: var(--spacing-sm);
   border: 2px solid var(--color-border-light);
