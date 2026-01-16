@@ -227,6 +227,8 @@ setOnTimeUp(() => {
 
   if (settings.value.autoSwitchEnabled) {
     timerSkip()
+    // 次モードを自動開始
+    timerStart()
   }
 })
 

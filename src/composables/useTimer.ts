@@ -56,6 +56,7 @@ export function useTimer() {
         timeUpFired = true
         onTimeUpCallback()
       }
+      return 
     } else {
       state.value.remainingSec = remaining
     }
