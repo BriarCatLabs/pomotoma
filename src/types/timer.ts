@@ -16,5 +16,6 @@ export interface Settings {
   breakMinutes: number
   motionEnabled: boolean
   chimeEnabled: boolean
+  autoSwitchEnabled: boolean
   lastMode: TimerMode
 }

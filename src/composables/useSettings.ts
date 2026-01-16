@@ -10,6 +10,7 @@ export function getDefaultSettings(): Settings {
     breakMinutes: 5,
     motionEnabled: true,
     chimeEnabled: true,
+    autoSwitchEnabled: true,
     lastMode: 'focus',
   }
 }
@@ -37,6 +38,7 @@ export function sanitizeSettings(input: Partial<Settings> | null | undefined): S
     breakMinutes: clamp(input.breakMinutes, 1, 99, defaults.breakMinutes),
     motionEnabled: typeof input.motionEnabled === 'boolean' ? input.motionEnabled : defaults.motionEnabled,
     chimeEnabled: typeof input.chimeEnabled === 'boolean' ? input.chimeEnabled : defaults.chimeEnabled,
+    autoSwitchEnabled: typeof input.autoSwitchEnabled === 'boolean' ? input.autoSwitchEnabled : defaults.autoSwitchEnabled,
     lastMode: input.lastMode === 'focus' || input.lastMode === 'break' ? input.lastMode : defaults.lastMode,
   }
 }

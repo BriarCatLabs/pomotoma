@@ -62,6 +62,7 @@
       :initial-break-minutes="settings.breakMinutes"
       :initial-motion-enabled="settings.motionEnabled"
       :initial-chime-enabled="settings.chimeEnabled"
+      :initial-auto-switch-enabled="settings.autoSwitchEnabled"
       @close="closeModal"
       @save="handleSave"
     />
@@ -164,6 +165,7 @@ const toggleMotion = () => {
     breakMinutes: settings.value.breakMinutes,
     motionEnabled: !settings.value.motionEnabled,
     chimeEnabled: settings.value.chimeEnabled,
+    autoSwitchEnabled: settings.value.autoSwitchEnabled,
     lastMode: timerState.value.mode,
   }
 
@@ -176,12 +178,13 @@ const toggleMotion = () => {
   }
 }
 
-const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean }) => {
+const handleSave = (payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean }) => {
   const newSettings = {
     focusMinutes: payload.focusMinutes,
     breakMinutes: payload.breakMinutes,
     motionEnabled: payload.motionEnabled,
     chimeEnabled: payload.chimeEnabled,
+    autoSwitchEnabled: payload.autoSwitchEnabled,
     lastMode: timerState.value.mode,
   }
 
@@ -215,8 +218,16 @@ onMounted(() => {
 })
 
 // Set up time-up callback
+// TimeUp処理:
+// 1. チャイムを鳴らす（chimeEnabled=trueの場合、最大3秒で自動停止）
+// 2. autoSwitchEnabled=trueの場合のみ、skip()を呼んで次モードへ切り替える
+//    （切り替え後はstatus='idle'のまま、自動でstartはしない）
 setOnTimeUp(() => {
   playChime()
+
+  if (settings.value.autoSwitchEnabled) {
+    timerSkip()
+  }
 })
 
 // Update document title
