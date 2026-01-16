@@ -4,44 +4,54 @@
       v-if="status === 'idle'"
       type="button"
       class="control-button primary"
+      aria-label="Start"
+      title="Start"
       @click="$emit('start')"
     >
-      Start
+      ▶︎
     </button>
 
     <button
       v-if="status === 'running'"
       type="button"
       class="control-button"
+      aria-label="Pause"
+      title="Pause"
       @click="$emit('pause')"
     >
-      Pause
+      ⏸
     </button>
 
     <button
       v-if="status === 'paused'"
       type="button"
       class="control-button primary"
+      aria-label="Start"
+      title="Start"
       @click="$emit('resume')"
     >
-      Resume
+      ▶︎
     </button>
 
     <button
       v-if="status !== 'idle'"
       type="button"
       class="control-button"
+      aria-label="Reset"
+      title="Reset"
       @click="$emit('reset')"
     >
-      Reset
+      ↺
     </button>
 
     <button
       type="button"
       class="control-button"
+      aria-label="Skip"
+      title="Skip"
       @click="$emit('skip')"
     >
-      Skip
+      ⏭
     </button>
   </div>
 </template>
