@@ -45,6 +45,7 @@
 
       <!-- Controls -->
       <TimerControls
+        :key="`controls-${settings.language}`"
         :status="timerState.status"
         :t="t"
         @start="start"
@@ -57,6 +58,7 @@
 
     <!-- Settings Modal -->
     <SettingsModal
+      :key="`modal-${settings.language}`"
       :open="isModalOpen"
       :status="timerState.status"
       :initial-focus-minutes="settings.focusMinutes"
@@ -73,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect, onMounted, toRef } from 'vue'
+import { ref, computed, watchEffect, onMounted } from 'vue'
 import { useTimer, formatMMSS } from '../composables/useTimer'
 import { useSettings } from '../composables/useSettings'
 import { useI18n } from '../i18n/useI18n'
@@ -83,7 +85,7 @@ import SettingsModal from './SettingsModal.vue'
 
 const { state: timerState, start: timerStart, pause, resume: timerResume, reset, skip: timerSkip, setMode, setDurations, setOnTimeUp } = useTimer()
 const { settings, save: saveSettingsToStorage } = useSettings()
-const languageRef = toRef(settings.value, 'language')
+const languageRef = computed(() => settings.value.language)
 const { t } = useI18n(languageRef)
 
 const motionEnabled = computed(() => settings.value.motionEnabled)
