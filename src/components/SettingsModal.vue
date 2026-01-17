@@ -67,6 +67,12 @@
             <option value="en">{{ t('settings.languageEn') }}</option>
           </select>
         </div>
+
+        <div class="about-section">
+          <h3 class="about-title">{{ t('about.title') }}</h3>
+          <p class="about-text">{{ t('about.description1') }}</p>
+          <p class="about-text">{{ t('about.description2') }}</p>
+        </div>
       </div>
 
       <div class="modal-footer">
@@ -85,6 +91,17 @@
         >
           {{ t('common.save') }}
         </button>
+      </div>
+
+      <div class="brand-credit">
+        <a
+          href="https://github.com/BriarCatLabs/pomotoma"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="brand-link"
+        >
+          Made with 🍅🐱 by BriarCatLabs
+        </a>
       </div>
     </div>
   </div>
@@ -256,5 +273,47 @@ const handleSave = () => {
 .modal-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.about-section {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.about-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.about-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--spacing-xs);
+}
+
+.about-text:last-child {
+  margin-bottom: 0;
+}
+
+.brand-credit {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+  text-align: center;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.brand-link {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-decoration: none;
+  transition: color var(--transition-base);
+}
+
+.brand-link:hover {
+  color: var(--color-text-secondary);
 }
 </style>

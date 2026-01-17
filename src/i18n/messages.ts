@@ -16,6 +16,9 @@ export type Messages = {
   'settings.language': string
   'settings.languageJa': string
   'settings.languageEn': string
+  'about.title': string
+  'about.description1': string
+  'about.description2': string
   'common.save': string
   'common.cancel': string
   'motion.on': string
@@ -41,6 +44,9 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'settings.language': '言語',
     'settings.languageJa': '日本語',
     'settings.languageEn': 'English',
+    'about.title': 'このアプリについて',
+    'about.description1': 'ポモドーロ・テクニックは時間管理法の一つです。25分間集中し、その後5分間の短い休憩を取ります。',
+    'about.description2': '集中時間や休憩時間の長さは、設定で調整できます。',
     'common.save': '保存',
     'common.cancel': 'キャンセル',
     'motion.on': 'オン',
@@ -64,6 +70,9 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'settings.language': 'Language',
     'settings.languageJa': '日本語',
     'settings.languageEn': 'English',
+    'about.title': 'About',
+    'about.description1': 'Pomodoro is a time management method: Focus for 25 minutes, then take a short break.',
+    'about.description2': 'You can adjust the Focus and Break lengths in Settings above.',
     'common.save': 'Save',
     'common.cancel': 'Cancel',
     'motion.on': 'On',
