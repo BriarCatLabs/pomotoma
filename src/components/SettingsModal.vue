@@ -57,6 +57,16 @@
         </div>
 
         <div class="form-group">
+          <label>
+            <input
+              v-model="formData.illustrationEnabled"
+              type="checkbox"
+            />
+            <span class="checkbox-label">{{ t('settings.enableIllustration') }}</span>
+          </label>
+        </div>
+
+        <div class="form-group">
           <label :for="`language-${uid}`">{{ t('settings.language') }}</label>
           <select
             :id="`language-${uid}`"
@@ -120,13 +130,14 @@ const props = defineProps<{
   initialMotionEnabled: boolean
   initialChimeEnabled: boolean
   initialAutoSwitchEnabled: boolean
+  initialIllustrationEnabled: boolean
   initialLanguage: 'ja' | 'en'
   t: (key: keyof Messages) => string
 }>()
 
 const emit = defineEmits<{
   close: []
-  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean; language: 'ja' | 'en' }]
+  save: [payload: { focusMinutes: number; breakMinutes: number; motionEnabled: boolean; chimeEnabled: boolean; autoSwitchEnabled: boolean; illustrationEnabled: boolean; language: 'ja' | 'en' }]
 }>()
 
 const uid = Math.random().toString(36).substring(2, 11)
@@ -139,6 +150,7 @@ const formData = reactive({
   motionEnabled: props.initialMotionEnabled,
   chimeEnabled: props.initialChimeEnabled,
   autoSwitchEnabled: props.initialAutoSwitchEnabled,
+  illustrationEnabled: props.initialIllustrationEnabled,
   language: props.initialLanguage,
 })
 
@@ -157,6 +169,7 @@ watch(() => props.open, (isOpen) => {
     formData.motionEnabled = props.initialMotionEnabled
     formData.chimeEnabled = props.initialChimeEnabled
     formData.autoSwitchEnabled = props.initialAutoSwitchEnabled
+    formData.illustrationEnabled = props.initialIllustrationEnabled
     formData.language = props.initialLanguage
   }
 })
@@ -168,6 +181,7 @@ const handleSave = () => {
     motionEnabled: formData.motionEnabled,
     chimeEnabled: formData.chimeEnabled,
     autoSwitchEnabled: formData.autoSwitchEnabled,
+    illustrationEnabled: formData.illustrationEnabled,
     language: formData.language,
   })
 }
