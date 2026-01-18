@@ -11,6 +11,7 @@ export function getDefaultSettings(): Settings {
     motionEnabled: true,
     chimeEnabled: true,
     autoSwitchEnabled: true,
+    illustrationEnabled: true,
     lastMode: 'focus',
     language: 'ja',
   }
@@ -40,6 +41,7 @@ export function sanitizeSettings(input: Partial<Settings> | null | undefined): S
     motionEnabled: typeof input.motionEnabled === 'boolean' ? input.motionEnabled : defaults.motionEnabled,
     chimeEnabled: typeof input.chimeEnabled === 'boolean' ? input.chimeEnabled : defaults.chimeEnabled,
     autoSwitchEnabled: typeof input.autoSwitchEnabled === 'boolean' ? input.autoSwitchEnabled : defaults.autoSwitchEnabled,
+    illustrationEnabled: typeof input.illustrationEnabled === 'boolean' ? input.illustrationEnabled : defaults.illustrationEnabled,
     lastMode: input.lastMode === 'focus' || input.lastMode === 'break' ? input.lastMode : defaults.lastMode,
     language: input.language === 'ja' || input.language === 'en' ? input.language : defaults.language,
   }

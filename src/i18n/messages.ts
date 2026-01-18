@@ -13,6 +13,7 @@ export type Messages = {
   'settings.enableMotion': string
   'settings.enableChime': string
   'settings.autoSwitch': string
+  'settings.enableIllustration': string
   'settings.language': string
   'settings.languageJa': string
   'settings.languageEn': string
@@ -23,6 +24,8 @@ export type Messages = {
   'common.cancel': string
   'motion.on': string
   'motion.off': string
+  'illustration.on': string
+  'illustration.off': string
 }
 
 export const messages: Record<'ja' | 'en', Messages> = {
@@ -41,6 +44,7 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'settings.enableMotion': 'モーション',
     'settings.enableChime': 'チャイム',
     'settings.autoSwitch': '自動切替（集中→休憩）',
+    'settings.enableIllustration': 'イラスト表示',
     'settings.language': '言語',
     'settings.languageJa': '日本語',
     'settings.languageEn': 'English',
@@ -51,6 +55,8 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'common.cancel': 'キャンセル',
     'motion.on': 'オン',
     'motion.off': 'オフ',
+    'illustration.on': 'オン',
+    'illustration.off': 'オフ',
   },
   en: {
     'app.title': 'Pomotoma',
@@ -67,6 +73,7 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'settings.enableMotion': 'Motion',
     'settings.enableChime': 'Chime',
     'settings.autoSwitch': 'Auto Switch (Focus → Break)',
+    'settings.enableIllustration': 'Illustration',
     'settings.language': 'Language',
     'settings.languageJa': '日本語',
     'settings.languageEn': 'English',
@@ -77,5 +84,7 @@ export const messages: Record<'ja' | 'en', Messages> = {
     'common.cancel': 'Cancel',
     'motion.on': 'On',
     'motion.off': 'Off',
+    'illustration.on': 'On',
+    'illustration.off': 'Off',
   },
 }

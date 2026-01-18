@@ -17,6 +17,7 @@ export interface Settings {
   motionEnabled: boolean
   chimeEnabled: boolean
   autoSwitchEnabled: boolean
+  illustrationEnabled: boolean
   lastMode: TimerMode
   language: 'ja' | 'en'
 }
