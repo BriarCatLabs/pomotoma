@@ -4,15 +4,15 @@
       <!-- Settings Button (Top Left) -->
       <button type="button" class="settings-button" @click="openModal">⚙️</button>
 
-      <!-- Motion Toggle (Top Right) -->
-      <button type="button" class="motion-toggle" @click="toggleMotion">
-        {{ t('settings.enableMotion') }}: {{ motionEnabled ? t('motion.on') : t('motion.off') }}
-      </button>
-
-      <!-- Illustration Toggle (Below Motion Toggle) -->
-      <button type="button" class="illustration-toggle" @click="toggleIllustration">
-        {{ t('settings.enableIllustration') }}: {{ illustrationEnabled ? t('illustration.on') : t('illustration.off') }}
-      </button>
+      <!-- Toggle Controls (Top Right) -->
+      <div class="toggle-controls">
+        <button type="button" class="toggle-button" @click="toggleMotion">
+          {{ t('settings.enableMotion') }}: {{ motionEnabled ? t('motion.on') : t('motion.off') }}
+        </button>
+        <button type="button" class="toggle-button" @click="toggleIllustration">
+          {{ t('settings.enableIllustration') }}: {{ illustrationEnabled ? t('illustration.on') : t('illustration.off') }}
+        </button>
+      </div>
 
       <!-- Mode Tabs -->
       <div class="mode-tabs">
@@ -323,11 +323,18 @@ watchEffect(() => {
   opacity: 1;
 }
 
-/* Motion Toggle */
-.motion-toggle {
+/* Toggle Controls */
+.toggle-controls {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.toggle-button {
   background: var(--color-bg-secondary);
   border: 2px solid var(--color-border-light);
   border-radius: var(--radius-md);
@@ -337,30 +344,10 @@ watchEffect(() => {
   cursor: pointer;
   padding: var(--spacing-xs) var(--spacing-sm);
   transition: all var(--transition-base);
+  white-space: nowrap;
 }
 
-.motion-toggle:hover {
-  background: var(--color-bg-tertiary);
-  border-color: var(--color-border-medium);
-}
-
-/* Illustration Toggle */
-.illustration-toggle {
-  position: absolute;
-  top: calc(var(--spacing-md) + var(--spacing-xl));
-  right: 0;
-  background: var(--color-bg-secondary);
-  border: 2px solid var(--color-border-light);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  cursor: pointer;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  transition: all var(--transition-base);
-}
-
-.illustration-toggle:hover {
+.toggle-button:hover {
   background: var(--color-bg-tertiary);
   border-color: var(--color-border-medium);
 }
@@ -437,8 +424,7 @@ watchEffect(() => {
     min-height: 200px;
   }
 
-  .motion-toggle,
-  .illustration-toggle {
+  .toggle-button {
     font-size: var(--font-size-xs);
     padding: var(--spacing-xs);
   }
